@@ -2,7 +2,8 @@
   "name": "cloudstitch-terminal",
   "main": "cloudstitch-terminal.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0-rc.2"
+    "polymer": "Polymer/polymer#^2.0.0-rc.2",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview",
