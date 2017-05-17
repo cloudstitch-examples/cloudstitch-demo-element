@@ -1,9 +1,16 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 <script src="typed.js"></script>
 <link rel="import" href="animations.html">
 
 <dom-module id="cloudstitch-terminal">
   <template>
+    <iron-ajax
+      id="animations"
+      url="https://api.cloudstitch.com/ted/documentation-animations?dev=true"
+      on-response="onResponse"
+      auto
+    ></iron-ajax>
     <style include="animation-styles">
       :host {
         display: block;
@@ -124,6 +131,13 @@
   </template>
 
   <script>
+    // http://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
+    function camelize(str) {
+      return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+        return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+      }).replace(/\s+/g, '');
+    }
+
     /**
      * `cloudstitch-terminal`
      * 
@@ -136,52 +150,20 @@
       static get is() { return 'cloudstitch-terminal'; }
       static get properties() {
         return {
-          prop1: {
+          name: {
             type: String,
-            value: 'cloudstitch-terminal'
+            value: 'Jekyll'
           }
         };        
       }
 
-      ready() {
-        super.ready();        
-        this.processScript([
-          {
-            type: {
-              text: "cloudstitch init",
-              delay: 0.1
-            }
-          },
-          {
-            type: {
-              text: "cloudstitch open folder",
-              delay: 0.1
-            }
-          },
-          {
-            showFiles: true,
-            delay: 0.8
-          },
-          {
-            fileDrag: {
-              title: "Blog Post"
-            },
-            delay: 0.8
-          },          
-          {
-            type: {
-              text: "cloudstitch sync",
-              delay: 0.1
-            }
-          },
-          {
-            showBrowser: true,
-          }
-
-        ]);
+      onResponse() {
+        console.log(this.$.animations.lastResponse);
+        var script = this.$.animations.lastResponse[this.name];
+        this.processFrames(script); 
       }
 
-      processScript(frames, done) {
+      processFrames(frames, done) {
         var self = this;
         var processAt = function(i) {
           if (i < frames.length) {
@@ -194,67 +176,75 @@
       }
 
       processFrame(frame, done) {   
-        var callback = false;     
-        if (frame.showFiles) {
-          this.$.folder.classList.remove('hidden');
-          this.$.folder.classList.add('animated');
-          this.$.folder.classList.add('slideInUp');        
-        }
-
-        if (frame.showBrowser) {
-          this.$.browser.classList.remove('hidden');
-          this.$.browser.classList.add('animated');
-          this.$.browser.classList.add('slideInUp');        
-        }
-
-        if (frame.fileDrag) {
-          var file = document.createElement('div');
-          file.classList.add('file');
-          file.classList.add('animated');
-          file.classList.add('slideInLeft');
-          this.$.folderBody.appendChild(file);
-        }
-
-        if (frame.type) {
-          var cli = document.createElement('div');
-          cli.classList.add('cli');
-
-          var prompt = document.createElement('span');
-          prompt.classList.add('prompt');
-          prompt.classList.add('promptAnimation');
-          prompt.innerHTML = '$ ';
-      
-          var cmd = document.createElement('span');
-          cmd.classList.add('cmd');
-
-          cli.appendChild(prompt);
-          cli.appendChild(cmd);
-
-          this.$.terminalBody.appendChild(cli);
-
-          callback = true;
-          var typed = Typed.new(cmd, {
-            strings: [frame.type.text],
-            typeSpeed: 2,
-            startDelay: (0.1 + frame.type.delay) * 1000,
-            callback: function() {
-              cmd.classList.add('nocursor');
-              done(typed)
+        var name = camelize(frame.Type);
+        if (this[name]) {
+          this[name](frame, function() {
+            if (frame['End Delay']) {
+              setTimeout(function() {
+                done();
+              }, (frame['End Delay'] * 1000));
+            } else {
+              done();
             }
           });
-        } 
-
-        if (!callback) {
-          if (frame.delay) {
-            setTimeout(function() {
-              done()
-            }, (frame.delay * 1000));
-          } else {
-            done();
-          }
         }
-
       }
+
+      terminalInput(frame, done) {
+        var cli = document.createElement('div');
+        cli.classList.add('cli');
+
+        var prompt = document.createElement('span');
+        prompt.classList.add('prompt');
+        prompt.classList.add('promptAnimation');
+        prompt.innerHTML = '$ ';
+    
+        var cmd = document.createElement('span');
+        cmd.classList.add('cmd');
+
+        cli.appendChild(prompt);
+        cli.appendChild(cmd);
+
+        this.$.terminalBody.appendChild(cli);
+
+        var typed = Typed.new(cmd, {
+          strings: [frame.Text],
+          typeSpeed: 2,
+          startDelay: (0.1 + frame['Start Delay'].delay) * 1000,
+          callback: function() {
+            cmd.classList.add('nocursor');
+            done(typed)
+          }
+        });
+      }
+
+      showFolder(frame, done) {
+        this.$.folder.classList.remove('hidden');
+        this.$.folder.classList.add('animated');
+        this.$.folder.classList.add('slideInUp');        
+        done();
+      }
+
+      showBrowser(frame, done) {
+        this.$.browser.classList.remove('hidden');
+        this.$.browser.classList.add('animated');
+        this.$.browser.classList.add('slideInUp');
+        done();
+      }
+
+      updateBrowser(frame, done) {
+        done();
+      }
+
+      addFile(frame, done) {
+        var file = document.createElement('div');
+        file.classList.add('file');
+        file.classList.add('animated');
+        file.classList.add('slideInLeft');
+        this.$.folderBody.appendChild(file);
+        done();
+      }
+
     }
 
     window.customElements.define(CloudstitchTerminal.is, CloudstitchTerminal);
