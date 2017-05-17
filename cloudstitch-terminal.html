@@ -1,0 +1,154 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<script src="typed.js"></script>
+
+<dom-module id="cloudstitch-terminal">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .nocursor + .typed-cursor{
+        opacity: 0 !important;
+      }
+
+      .cli {
+
+      }
+
+      .prompt {
+        font-weight: bold;
+        margin-right: 10px;
+        opacity: 0;
+      }
+
+      .prompt, .cmd {
+        display: inline-block;
+      }
+
+      /* Keyframes for the fade-in */
+      @-webkit-keyframes fadeInPrompt { from { opacity:0; } to { opacity:1; } }
+      @-moz-keyframes fadeInPrompt { from { opacity:0; } to { opacity:1; } }
+      @keyframes fadeInPrompt { from { opacity:0; } to { opacity:1; } }
+      .promptAnimation {
+        opacity:0;
+        opacity: 1 \9; /*just in case ie*/
+        -webkit-animation:fadeInPrompt ease-in 1;
+        -moz-animation:fadeInPrompt ease-in 1;
+        animation:fadeInPrompt ease-in 1;
+
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-duration:0.1s;
+        -moz-animation-duration:0.1s;
+        animation-duration:0.1s;
+      }
+
+      #terminal {
+        background-color: black;
+        border-radius: 5px;
+        width: 300px;
+        height: 200px;
+        color: white;              
+      }
+
+      #console {
+        padding: 20px;
+        font-family: "Roboto Mono";
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <div id="terminal">
+      <div id="console">
+      </div>
+    </div>
+
+
+  </template>
+
+  <script>
+    /**
+     * `cloudstitch-terminal`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CloudstitchTerminal extends Polymer.Element {
+      static get is() { return 'cloudstitch-terminal'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'cloudstitch-terminal'
+          }
+        };        
+      }
+
+      ready() {
+        super.ready();        
+        this.processScript([
+          {
+            type: {
+              text: "Hi there",
+              delay: 0.1
+            }
+          },
+          {
+            type: {
+              text: "This is cool",
+              delay: 0.1
+            }
+          }
+        ]);
+      }
+
+      processScript(frames, done) {
+        var self = this;
+        var processAt = function(i) {
+          if (i < frames.length) {
+            self.processFrame(frames[i], function() {
+              processAt(i+1);
+            })
+          }          
+        }
+        processAt(0);
+      }
+
+      processFrame(frame, done) {        
+        if (frame.type) {
+          var cli = document.createElement('div');
+          cli.classList.add('cli');
+
+          var prompt = document.createElement('span');
+          prompt.classList.add('prompt');
+          prompt.classList.add('promptAnimation');
+          prompt.innerHTML = '$ ';
+      
+          var cmd = document.createElement('span');
+          cmd.classList.add('cmd');
+
+          cli.appendChild(prompt);
+          cli.appendChild(cmd);
+
+          this.$.console.appendChild(cli);
+
+          var typed = Typed.new(cmd, {
+            strings: [frame.type.text],
+            typeSpeed: 2,
+            startDelay: (0.1 + frame.type.delay) * 1000,
+            callback: function() {
+              cmd.classList.add('nocursor');
+              done(typed)
+            }
+          });
+        }
+      }
+    }
+
+    window.customElements.define(CloudstitchTerminal.is, CloudstitchTerminal);
+  </script>
+</dom-module>
