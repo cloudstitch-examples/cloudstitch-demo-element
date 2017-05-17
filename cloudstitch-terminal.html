@@ -1,11 +1,14 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <script src="typed.js"></script>
+<link rel="import" href="animations.html">
 
 <dom-module id="cloudstitch-terminal">
   <template>
-    <style>
+    <style include="animation-styles">
       :host {
         display: block;
+        --newX: 100%;
+        --newY: 100%;
       }
 
       .nocursor + .typed-cursor{
@@ -54,17 +57,69 @@
         color: white;              
       }
 
-      #console {
-        padding: 20px;
+      #folder {
+        background-color: #ccc;
+        border-radius: 5px;
+        width: 300px;
+        height: 200px;
+        color: white;    
+      }
+
+      #browser {
+        background-color: #ffcc99;
+        border-radius: 5px;
+        width: 300px;
+        height: 200px;
+        color: white;              
+      }
+
+      #terminalBody {
         font-family: "Roboto Mono";
+      }
+
+      .file {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        display: block;
+      }
+
+      .title {
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        color: #555;
+      }
+
+      .windowBody {
+        padding: 20px;
+      }
+  
+      .hidden {
+        display: none;
+      }
+
+      .window {
+        float: left;
+        margin: 20px;
       }
     </style>
     <h2>Hello [[prop1]]!</h2>
-    <div id="terminal">
-      <div id="console">
-      </div>
+
+    <div id="terminal" class="window">
+      <div class="title">Terminal</div>
+      <div id="terminalBody" class="windowBody"></div>
     </div>
 
+    <div id="folder" class="window hidden">
+      <div class="title">Folder</div>
+      <div id="folderBody" class="windowBody"></div>
+    </div>
+
+    <div id="browser" class="window hidden">
+      <div class="title">Browser</div>
+      <div id="browserBody" class="windowBody"></div>
+    </div>
 
   </template>
 
@@ -93,16 +148,36 @@
         this.processScript([
           {
             type: {
-              text: "Hi there",
+              text: "cloudstitch init",
               delay: 0.1
             }
           },
           {
             type: {
-              text: "This is cool",
+              text: "cloudstitch open folder",
               delay: 0.1
             }
+          },
+          {
+            showFiles: true,
+            delay: 0.8
+          },
+          {
+            fileDrag: {
+              title: "Blog Post"
+            },
+            delay: 0.8
+          },          
+          {
+            type: {
+              text: "cloudstitch sync",
+              delay: 0.1
+            }
+          },
+          {
+            showBrowser: true,
           }
+
         ]);
       }
 
@@ -118,7 +193,28 @@
         processAt(0);
       }
 
-      processFrame(frame, done) {        
+      processFrame(frame, done) {   
+        var callback = false;     
+        if (frame.showFiles) {
+          this.$.folder.classList.remove('hidden');
+          this.$.folder.classList.add('animated');
+          this.$.folder.classList.add('slideInUp');        
+        }
+
+        if (frame.showBrowser) {
+          this.$.browser.classList.remove('hidden');
+          this.$.browser.classList.add('animated');
+          this.$.browser.classList.add('slideInUp');        
+        }
+
+        if (frame.fileDrag) {
+          var file = document.createElement('div');
+          file.classList.add('file');
+          file.classList.add('animated');
+          file.classList.add('slideInLeft');
+          this.$.folderBody.appendChild(file);
+        }
+
         if (frame.type) {
           var cli = document.createElement('div');
           cli.classList.add('cli');
@@ -134,8 +230,9 @@
           cli.appendChild(prompt);
           cli.appendChild(cmd);
 
-          this.$.console.appendChild(cli);
+          this.$.terminalBody.appendChild(cli);
 
+          callback = true;
           var typed = Typed.new(cmd, {
             strings: [frame.type.text],
             typeSpeed: 2,
@@ -145,7 +242,18 @@
               done(typed)
             }
           });
+        } 
+
+        if (!callback) {
+          if (frame.delay) {
+            setTimeout(function() {
+              done()
+            }, (frame.delay * 1000));
+          } else {
+            done();
+          }
         }
+
       }
     }
 
