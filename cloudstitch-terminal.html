@@ -110,22 +110,24 @@
         float: left;
         margin: 20px;
       }
+
     </style>
     <h2>Hello [[prop1]]!</h2>
 
     <div id="terminal" class="window">
-      <div class="title">Terminal</div>
+      <div id="terminalTitle" class="title">Terminal</div>
       <div id="terminalBody" class="windowBody"></div>
     </div>
 
     <div id="folder" class="window hidden">
-      <div class="title">Folder</div>
+      <div id="folderTitle" class="title">Folder</div>
       <div id="folderBody" class="windowBody"></div>
     </div>
 
     <div id="browser" class="window hidden">
-      <div class="title">Browser</div>
-      <div id="browserBody" class="windowBody"></div>
+      <div id="browserTitle" class="title">Browser</div>
+      <div id="browserBody" class="windowBody">        
+      </div>
     </div>
 
   </template>
@@ -233,7 +235,11 @@
       showFolder(frame, done) {
         this.$.folder.classList.remove('hidden');
         this.$.folder.classList.add('animated');
-        this.$.folder.classList.add('slideInUp');        
+        this.$.folder.classList.add('slideInUp');    
+        this.$.folderTitle.innerHTML = frame.Text || '';
+        if (frame.Class) {
+          this.$.folder.classList.add(frame.Class);
+        }
         done();
       }
 
@@ -241,10 +247,24 @@
         this.$.browser.classList.remove('hidden');
         this.$.browser.classList.add('animated');
         this.$.browser.classList.add('slideInUp');
+        if (frame.Class) {
+          this.$.browser.classList.add(frame.Class);
+        }
+        this.$.browserTitle.innerHTML = frame.Text || '';
         done();
       }
 
       updateBrowser(frame, done) {
+        var updateRow = document.createElement('div');
+        updateRow.classList.add('updateRow');
+
+        var updateText = document.createElement('span');
+        updateText.classList.add('updateText');
+        updateText.innerHTML = frame.Text
+
+        updateRow.appendChild(updateText);
+        this.$.browserBody.appendChild(updateRow);
+
         done();
       }
 
@@ -253,6 +273,12 @@
         file.classList.add('file');
         file.classList.add('animated');
         file.classList.add('slideInLeft');
+
+        var fileTitle = document.createElement('span');
+        fileTitle.classList.add('fileTitle');
+        fileTitle.innerHTML = frame.Text;
+        file.appendChild(fileTitle);
+
         this.$.folderBody.appendChild(file);
         done();
       }
