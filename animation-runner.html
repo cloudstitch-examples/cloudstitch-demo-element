@@ -1,0 +1,122 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="animation-runner">
+  <template>
+    <iron-ajax
+      id="animations"
+      url="https://api.cloudstitch.com/ted/documentation-animations?dev=true"
+      on-response="onResponse"
+      auto
+    ></iron-ajax>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <window-actor id="terminal" css-class="terminal"></window-actor>
+    <window-actor id="spreadsheet" css-class="spreadsheet"></window-actor>
+    <window-actor id="folder" css-class="folder"></window-actor>
+    <window-actor id="browserGithub" css-class="browserGithub"></window-actor>
+    <window-actor id="browserBlogIndex" css-class="browserBlogIndex"></window-actor>
+    <window-actor id="browserBlogPost" css-class="browserBlogPost"></window-actor>
+    <window-actor id="browserBlogForm" css-class="browserBlogForm"></window-actor>
+
+  </template>
+
+  <script>
+    // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    /**
+     * `cloudstitch-terminal`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AnimationRunner extends Polymer.Element {
+      static get is() { return 'animation-runner'; }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'Jekyll'
+          },
+          script: {
+            type: Array
+          }
+        };        
+      }
+
+      onResponse() {
+        console.log(this.$.animations.lastResponse);
+        this.name = getParameterByName('name') || 'Jekyll';
+        this.script = this.$.animations.lastResponse[this.name];
+        this.runScript();
+      }
+
+      runScript() {
+        this.processFrame(this.script);
+      }
+
+      processFrames(frames) {
+        var self = this;
+        var processAt = function(i) {
+          if (i < frames.length) {
+            self.processFrame(frames[i], function() {
+              processAt(i+1);
+            })
+          }          
+        }
+        processAt(0);
+      }
+
+      /*
+       * A frame must have the following properties:
+       *   Actor  --> the ID of the element
+       *   Action --> the method we'll call on the element
+       *   Delay  --> the delay before starting this animation
+       *   ArgN   --> A list of properties Arg1...Arg5 that we'll pass positionally
+       */
+      processFrame(frame, done) {   
+        var name = camelize(frame.Type);
+        if (this.$[frame.Actor]) {
+          if (this.$[frame.Actor][frame.Action]) {
+            var args = [
+              frame.Arg1,
+              frame.Arg2,
+              frame.Arg3,
+              frame.Arg4,
+              frame.Arg5              
+            ];
+            var delay = frame.Delay || 0;
+            delay = parseFloat(delay) * 1000;
+            var self = this;
+            setTimeout(function() {
+              self.$[frame.Actor][frame.Action](args, done);
+            }, delay)
+          } else {
+            console.error("Unable to find Action", frame.Action, "on Actor", frame.Actor);
+            done();
+          }
+        } else {
+          console.error("Unable to find Actor", frame.Actor);
+          done();
+        }
+      }
+    }
+
+    window.customElements.define(AnimationRunner.is, AnimationRunner);
+  </script>
+</dom-module>
