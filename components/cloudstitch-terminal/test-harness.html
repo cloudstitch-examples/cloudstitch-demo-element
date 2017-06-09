@@ -1,0 +1,104 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="window-actor.html">
+
+<dom-module id="test-harness">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      window-actor {
+        display: inline-block;
+        margin: 10px;
+      }
+
+      paper-button {
+        background-color: darkblue;
+        color: white;
+      }
+    </style>
+
+    <h1>Step 1: Assets</h1>
+
+    <p>
+      Create css classes that can be applied to a window so that they look
+      like the following.
+    </p>
+
+    <window-actor title="Terminal" css-class="terminal"></window-actor>
+    <window-actor title="Spreadsheet" css-class="spreadsheet"></window-actor>
+    <window-actor title="Folder" css-class="folder"></window-actor>
+    <window-actor title="Github" css-class="browserGithub"></window-actor>
+    <window-actor title="Blog Index" css-class="browserBlogIndex"></window-actor>
+    <window-actor title="Blog Post" css-class="browserBlogPost"></window-actor>
+    <window-actor title="Form" css-class="browserForm"></window-actor>
+
+    <h1>Step 1: Animations</h1>
+
+    <p>The next step is to create animations that will be used on the actors.</p>
+
+    <h4>Folder</h4> 
+    <paper-button raised on-tap="runAnimation" target="folder" animation="show">Show</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" animation="hide">Hide</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" argument="Products" klass="excel" animation="add-file">Drag File</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" animation="click-file">Double Click File</paper-button>
+    <window-actor id="folder" style="display: block;" css-class="folder"></window-actor>
+
+
+
+
+    <h4>Blog List</h4> 
+    <paper-button raised on-tap="runAnimation" target="blogList" animation="add-item">Add Item</paper-button>
+    <window-actor id="blogList" style="display: block;" css-class="browserBlogIndex"></window-actor>
+
+
+
+    <h4>Github</h4> 
+    <div>Note: Nothing but CSS is different than the add item on the blog list!</div>
+    <paper-button raised on-tap="runAnimation" target="githubWindow" animation="add-item">Add Item</paper-button>
+    <window-actor id="githubWindow" style="display: block;" css-class="browserGithub"></window-actor>
+
+
+
+    <h4>Terminal</h4> 
+    <paper-button raised on-tap="runAnimation" target="terminalWindow" animation="type" argument="hello, world">Add Input</paper-button>
+    <window-actor id="terminalWindow" style="display: block;" css-class="terminal"></window-actor>
+
+
+
+  </template>
+
+  <script>
+
+    class TestHarness extends Polymer.Element {
+      static get is() { return 'test-harness'; }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'Jekyll'
+          },
+          script: {
+            type: Array
+          }
+        };        
+      }
+    
+      runAnimation(e) {
+        var target = e.target.getAttribute('target');
+        var animation = e.target.getAttribute('animation');
+        var klass = e.target.getAttribute('klass');
+        var argument = e.target.getAttribute('argument');
+        
+
+        this.$[target].runAnimation(animation, argument, 100, 100, klass, function() {});
+      }
+    }
+
+
+    window.customElements.define(TestHarness.is, TestHarness);
+  </script>
+</dom-module>

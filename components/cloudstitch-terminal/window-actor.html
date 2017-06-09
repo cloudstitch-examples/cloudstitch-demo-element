@@ -1,0 +1,167 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<script src="typed.js"></script>
+<link rel="import" href="styles-shared.html" >
+
+<dom-module id="window-actor">
+  <template>
+    <style include="styles-shared">
+      :host {
+        display: block;
+        margin: 20px;
+      }
+
+      /* Keyframes for the fade-in */
+      @-webkit-keyframes fadeInPrompt { from { opacity:0; } to { opacity:1; } }
+      @-moz-keyframes fadeInPrompt { from { opacity:0; } to { opacity:1; } }
+      @keyframes fadeInPrompt { from { opacity:0; } to { opacity:1; } }
+      .promptAnimation {
+        opacity:0;
+        opacity: 1 \9; /*just in case ie*/
+        -webkit-animation:fadeInPrompt ease-in 1;
+        -moz-animation:fadeInPrompt ease-in 1;
+        animation:fadeInPrompt ease-in 1;
+
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-duration:0.1s;
+        -moz-animation-duration:0.1s;
+        animation-duration:0.1s;
+      }
+
+
+    </style>
+
+    <div id="file" class="file hidden">
+      <div id="fileicon" class="fileicon"></div>      
+      <div id="filename" class="filename"></div>
+    </div>
+
+    <div id="mouseCursor" class="cursor hidden">
+    </div>
+
+    <div id="window" class$="window {{hidden}} {{cssClass}}">
+      <div class="title">[[title]]</div>
+      <div class="body">
+        <div id="items" class="items">
+
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class WindowActor extends Polymer.Element {
+      static get is() { return 'window-actor'; }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'Jekyll'
+          },
+          title: {
+            type: String,
+          },
+          cssClass: {
+            type: String
+          },
+          hidden: {
+            type: String,
+            value: ''
+          }
+        };        
+      }
+
+      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
+        startDelay = startDelay || 0;
+        endDelay = endDelay || 0;
+        var andFinish = function() {
+          setTimeout(done, endDelay)
+        }
+        switch (command) {
+
+
+
+          case 'show':
+            this.$.window.classList.remove('hidden');
+            break;
+
+
+
+          case 'hide':
+            this.$.window.classList.add('hidden');
+            this.$.file.classList.add('hidden');
+            this.$.file.classList.remove('animated');
+            this.$.file.classList.remove('slideInLeft');
+            break;
+
+
+
+          case 'add-file':
+            this.$.file.classList.remove('hidden');        
+            this.$.file.classList.add('animated');
+            this.$.file.classList.add('slideInLeft');
+            if (objectClass) this.$.fileicon.classList.add(objectClass);
+            if (argument) this.$.filename.innerHTML = argument;
+            break;
+
+
+
+          case 'click-file':
+            this.$.mouseCursor.classList.remove('hidden');        
+            this.$.mouseCursor.classList.add('animated');
+            this.$.mouseCursor.classList.add('slideInLeft');
+            break;
+
+            
+
+          case 'add-item':
+            var item = document.createElement('div');
+            item.classList.add('item');
+            this.$.items.appendChild(item);
+            item.classList.add('animated');
+            item.classList.add('slideInDown');
+            break;          
+
+
+
+          case 'type':
+            var cli = document.createElement('div');
+            cli.classList.add('cli');
+
+            var prompt = document.createElement('span');
+            prompt.classList.add('prompt');
+            prompt.classList.add('promptAnimation');
+            prompt.innerHTML = '$ ';
+        
+            var cmd = document.createElement('span');
+            cmd.classList.add('cmd');
+
+            cli.appendChild(prompt);
+            cli.appendChild(cmd);
+
+            this.$.items.appendChild(cli);
+            
+            var typed = Typed.new(cmd, {
+              strings: [argument],
+              typeSpeed: 2,
+              startDelay: (0.1 + parseInt(startDelay)),
+              callback: function() {
+                cmd.classList.add('nocursor');                
+                done(typed)
+              }
+            });
+            break;
+        }
+
+      }
+
+
+
+    }
+
+    window.customElements.define(WindowActor.is, WindowActor);
+  </script>
+</dom-module>

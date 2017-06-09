@@ -1,0 +1,28 @@
+{
+  "name": "cloudstitch-terminal",
+  "main": "cloudstitch-terminal.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0-rc.2",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.0",
+    "paper-button": "PolymerElements/paper-button#^2.0.0"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview",
+    "web-component-tester": "^6.0.0-prerelease.5",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.5"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0-rc.2"
+  },
+  "homepage": "https://github.com/cloudstitch-examples/cloudstitch-demo-element",
+  "_release": "8ca2da7148",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8ca2da71486be0f46d6854201831de2707ee028a"
+  },
+  "_source": "git://github.com/cloudstitch-examples/cloudstitch-demo-element.git",
+  "_target": "master",
+  "_originalSource": "cloudstitch-examples/cloudstitch-demo-element",
+  "_direct": true
+}

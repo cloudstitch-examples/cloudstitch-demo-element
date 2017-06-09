@@ -1,0 +1,156 @@
+<link rel="import" href="styles-animations.html">
+<dom-module id="styles-shared">
+<template>
+<style include="styles-animation">
+/*
+ *
+ * Styles shared across all actors
+ *
+ */
+.window {
+  width: 400px;
+  height: 300px;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+}
+
+.body {
+  padding: 20px;
+}
+
+.item {
+  display: block;
+  width: 300px;
+  clear: both;
+}
+
+.hidden {
+  display: none;
+}
+
+.file {
+  position: absolute;
+  margin-top: 80px;
+  width: 100px;
+  height: 130px;
+  display: block;
+}
+
+.fileicon {
+  width: 100px;
+  height: 100px;
+}
+
+.cursor {
+  width: 25px;
+  height: 25px; 
+  position: absolute;
+  margin-top: 100px;
+}
+
+.window, .fileicon, .cursor, .item {
+  background-position: top left;
+  background-size: contain;         /* Generic*/
+  background-repeat: no-repeat;  
+}
+
+/*
+  *
+  * Different styles for the actors
+  *
+  */
+.terminal {
+  background-image: url(images/terminal.png);
+}
+
+.folder {
+   background-image: url(images/folder.png);
+}
+
+.spreadsheet {
+  background-image: url(images/spreadsheet.png);
+ }
+
+.browserGithub {
+  background-image: url(images/github.png);
+}
+
+.browserForm {
+  background-image: url(images/form.png);
+}
+
+.browserBlogPost {
+  background-image: url(images/blog-post.png);
+}
+
+.browserBlogIndex {
+  background-image: url(images/blog-index.png);
+}
+
+.fileicon.excel {
+  background-image: url(images/file-excel.png);
+}
+
+.fileicon.word {
+  background-image: url(images/file-word.png);
+}
+
+.cursor {
+  background-image: url(images/cursor.png);
+}
+
+
+/*
+ * Styles for items
+ */
+
+.terminal .items {
+  font-weight: bold;
+  margin-right: 10px;
+  color: white;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.terminal .cli > * {
+  color: white;
+}
+
+.nocursor + .typed-cursor{
+  opacity: 0 !important;
+}
+
+.terminal .items > * {
+  font-family: "Roboto Mono";
+}
+
+.browserBlogIndex .items {
+  margin-top: 140px;
+  margin-left: 40px;
+}
+
+.browserBlogIndex .item {
+  height: 100px;
+  width: 200px;
+  background-image: url(images/blog-index-piece.png);  
+}
+
+.browserGithub .items {
+  margin-top: 140px;
+  margin-left: 10px;
+}
+
+.browserGithub .item {
+  height: 100px;
+  width: 200px;
+  background-image: url(images/github-piece.png);  
+}
+
+</style>
+</template>
+</dom-module>
