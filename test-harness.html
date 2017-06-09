@@ -11,49 +11,63 @@
       }
 
       window-actor {
-        display: block;
+        display: inline-block;
         margin: 10px;
+      }
+
+      paper-button {
+        background-color: darkblue;
+        color: white;
       }
     </style>
 
-    <h1>Actor Lineup</h1>
-    <p>The first step is to simply create the CSS styles that shows each window.</p>
+    <h1>Step 1: Assets</h1>
 
-    <h4>Terminal</h4> 
-    <window-actor css-class="terminal"></window-actor>
+    <p>
+      Create css classes that can be applied to a window so that they look
+      like the following.
+    </p>
 
-    <h4>Spreadsheet</h4> 
-    <window-actor css-class="spreadsheet"></window-actor>
+    <window-actor title="Terminal" css-class="terminal"></window-actor>
+    <window-actor title="Spreadsheet" css-class="spreadsheet"></window-actor>
+    <window-actor title="Folder" css-class="folder"></window-actor>
+    <window-actor title="Github" css-class="browserGithub"></window-actor>
+    <window-actor title="Blog Index" css-class="browserBlogIndex"></window-actor>
+    <window-actor title="Blog Post" css-class="browserBlogPost"></window-actor>
+    <window-actor title="Form" css-class="browserForm"></window-actor>
 
-    <h4>Folder</h4> 
-    <window-actor css-class="folder"></window-actor>
+    <h1>Step 1: Animations</h1>
 
-    <h4>BrowserGithub</h4> 
-    <window-actor css-class="browserGithub"></window-actor>
-
-    <h4>BrowserBlogIndex</h4> 
-    <window-actor css-class="browserBlogIndex"></window-actor>
-
-    <h4>BrowserBlogPost</h4> 
-    <window-actor css-class="browserBlogPost"></window-actor>
-
-    <h4>BrowserForm</h4> 
-    <window-actor css-class="browserBlogForm"></window-actor>
-
-    <!--<h1>Animations</h1>
     <p>The next step is to create animations that will be used on the actors.</p>
 
     <h4>Folder</h4> 
-    <window-actor css-class="folder"></window-actor>
+    <paper-button raised on-tap="runAnimation" target="folder" animation="show">Show</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" animation="hide">Hide</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" argument="Products" klass="excel" animation="add-file">Drag File</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" animation="click-file">Double Click File</paper-button>
+    <window-actor id="folder" style="display: block;" css-class="folder"></window-actor>
 
-    <paper-button on-tap="ShowFile">Show File</paper-button>
-    <paper-button on-tap="DoubleClick">Double Click</paper-button>
+
+
+
+    <h4>Blog List</h4> 
+    <paper-button raised on-tap="runAnimation" target="blogList" animation="add-item">Add Item</paper-button>
+    <window-actor id="blogList" style="display: block;" css-class="browserBlogIndex"></window-actor>
+
+
+
+    <h4>Github</h4> 
+    <div>Note: Nothing but CSS is different than the add item on the blog list!</div>
+    <paper-button raised on-tap="runAnimation" target="githubWindow" animation="add-item">Add Item</paper-button>
+    <window-actor id="githubWindow" style="display: block;" css-class="browserGithub"></window-actor>
+
+
 
     <h4>Terminal</h4> 
-    <window-actor css-class="folder"></window-actor>
+    <paper-button raised on-tap="runAnimation" target="terminalWindow" animation="type" argument="hello, world">Add Input</paper-button>
+    <window-actor id="terminalWindow" style="display: block;" css-class="terminal"></window-actor>
 
-    <paper-button on-tap="AddInput">AddInput</paper-button>
-    <paper-button on-tap="AddOutput">AddOutput</paper-button>-->
+
 
   </template>
 
@@ -72,7 +86,18 @@
           }
         };        
       }
+    
+      runAnimation(e) {
+        var target = e.target.getAttribute('target');
+        var animation = e.target.getAttribute('animation');
+        var klass = e.target.getAttribute('klass');
+        var argument = e.target.getAttribute('argument');
+        
+
+        this.$[target].runAnimation(animation, argument, 100, 100, klass, function() {});
+      }
     }
+
 
     window.customElements.define(TestHarness.is, TestHarness);
   </script>

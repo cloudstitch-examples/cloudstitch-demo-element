@@ -1,17 +1,13 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <script src="typed.js"></script>
-<link rel="import" href="animations.html">
+<link rel="import" href="styles-shared.html" >
 
 <dom-module id="window-actor">
   <template>
-    <style include="animation-styles">
+    <style include="styles-shared">
       :host {
         display: block;
         margin: 20px;
-      }
-
-      .nocursor + .typed-cursor{
-        opacity: 0 !important;
       }
 
       /* Keyframes for the fade-in */
@@ -34,104 +30,23 @@
         animation-duration:0.1s;
       }
 
-      /*
-       * Actors
-       */
-      #window {
-        border-radius: 5px;
-        width: 300px;
-        height: 200px;
-        margin: 20px;
-      }
-
-      #title {
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        color: #555;
-      }
-
-      #body {
-        padding: 20px;
-      }
-  
-      .hidden {
-        display: none;
-      }
-
-      #file {
-        width: 100px;
-        height: 100px;
-        background-color: red;
-        display: block;
-      }
-
-      /*
-       *
-       * Different styles for the actors
-       *
-       */
-      .terminal {
-        background-color: black;
-        color: white;              
-      }
-
-      .folder {
-        background-color: #ccc;
-        color: white;    
-      }
-
-      .spreadsheet {
-        background-color: blue;
-        color: white;    
-      }
-
-      .browserGithub {
-        background-color: red;
-        color: white;              
-      }
-
-      .browserForm {
-        background-color: orange;
-        color: white;              
-      }
-
-      .browserBlogPost {
-        background-color: green;
-        color: white;              
-      }
-
-      .browserBlogIndex {
-        background-color: purple;
-        color: white;              
-      }
-
-      /* 
-       * Different styles fo the items
-       */
-      .terminal .items {
-        font-weight: bold;
-        margin-right: 10px;
-        opacity: 0;
-      }
-
-      .terminal .items > * {
-        display: inline-block;
-        font-family: "Roboto Mono";
-      }
 
     </style>
 
-    <div id="file">
+    <div id="file" class="file hidden">
+      <div id="fileicon" class="fileicon"></div>      
+      <div id="filename" class="filename"></div>
     </div>
 
-    <div id="mouseCursor">
+    <div id="mouseCursor" class="cursor hidden">
     </div>
 
     <div id="window" class$="window {{hidden}} {{cssClass}}">
-      <div class="title">Folder</div>
+      <div class="title">[[title]]</div>
       <div class="body">
-        <div class="items"></div>
+        <div id="items" class="items">
+
+        </div>
       </div>
     </div>
 
@@ -146,6 +61,9 @@
             type: String,
             value: 'Jekyll'
           },
+          title: {
+            type: String,
+          },
           cssClass: {
             type: String
           },
@@ -156,65 +74,91 @@
         };        
       }
 
-      show(args, done) {
-        this.$.window.classList.remove('hidden');
-        this.$.window.classList.add('animated');
-        this.$.window.classList.add('slideInUp');    
-        done();
+      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
+        startDelay = startDelay || 0;
+        endDelay = endDelay || 0;
+        var andFinish = function() {
+          setTimeout(done, endDelay)
+        }
+        switch (command) {
+
+
+
+          case 'show':
+            this.$.window.classList.remove('hidden');
+            break;
+
+
+
+          case 'hide':
+            this.$.window.classList.add('hidden');
+            this.$.file.classList.add('hidden');
+            this.$.file.classList.remove('animated');
+            this.$.file.classList.remove('slideInLeft');
+            break;
+
+
+
+          case 'add-file':
+            this.$.file.classList.remove('hidden');        
+            this.$.file.classList.add('animated');
+            this.$.file.classList.add('slideInLeft');
+            if (objectClass) this.$.fileicon.classList.add(objectClass);
+            if (argument) this.$.filename.innerHTML = argument;
+            break;
+
+
+
+          case 'click-file':
+            this.$.mouseCursor.classList.remove('hidden');        
+            this.$.mouseCursor.classList.add('animated');
+            this.$.mouseCursor.classList.add('slideInLeft');
+            break;
+
+            
+
+          case 'add-item':
+            var item = document.createElement('div');
+            item.classList.add('item');
+            this.$.items.appendChild(item);
+            item.classList.add('animated');
+            item.classList.add('slideInDown');
+            break;          
+
+
+
+          case 'type':
+            var cli = document.createElement('div');
+            cli.classList.add('cli');
+
+            var prompt = document.createElement('span');
+            prompt.classList.add('prompt');
+            prompt.classList.add('promptAnimation');
+            prompt.innerHTML = '$ ';
+        
+            var cmd = document.createElement('span');
+            cmd.classList.add('cmd');
+
+            cli.appendChild(prompt);
+            cli.appendChild(cmd);
+
+            this.$.items.appendChild(cli);
+            
+            var typed = Typed.new(cmd, {
+              strings: [argument],
+              typeSpeed: 2,
+              startDelay: (0.1 + parseInt(startDelay)),
+              callback: function() {
+                cmd.classList.add('nocursor');                
+                done(typed)
+              }
+            });
+            break;
+        }
+
       }
 
-      setTitle(args, done) {
-        this.$.title.innerHTML(args[0]);
-        done();
-      }
 
-      setFilename(args, done) {
-        this.$.filename.innerHTML(args[0]);
-        done();
-      }
-
-      addFile(frame, done) {
-        this.$.file.classList.remove('hidden');        
-        this.$.file.classList.add('animated');
-        this.$.file.classList.add('slideInLeft');
-        done();
-      }
-
-      /*
-       * Each window type has a container where we can add items that are styled
-       * and animated appropriately for that particular container.
-       */
-      _addItem(item) {
-        this.$.items.appendChild(item);
-      }
-
-      terminalInput(args, done) {
-        var cli = document.createElement('div');
-        cli.classList.add('cli');
-
-        var prompt = document.createElement('span');
-        prompt.classList.add('prompt');
-        prompt.classList.add('promptAnimation');
-        prompt.innerHTML = '$ ';
-    
-        var cmd = document.createElement('span');
-        cmd.classList.add('cmd');
-
-        cli.appendChild(prompt);
-        cli.appendChild(cmd);
-
-        this._addItem(cli);
-
-        var typed = Typed.new(cmd, {
-          strings: [frame.Text],
-          typeSpeed: 2,
-          startDelay: (0.1 + frame['Start Delay'].delay) * 1000,
-          callback: function() {
-            cmd.classList.add('nocursor');
-            done(typed)
-          }
-        });
-      }
 
     }
 
