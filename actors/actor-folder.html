@@ -1,0 +1,86 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../styles-shared.html" >
+
+<dom-module id="actor-folder">
+  <template>
+    <style include="styles-shared">
+      :host {
+        display: block;
+        margin: 20px;
+      }
+    </style>
+
+    <div id="file" class="file hidden">
+      <div id="fileicon" class="fileicon"></div>      
+      <div id="filename" class="filename"></div>
+    </div>
+
+    <div id="mouseCursor" class="cursor hidden">
+    </div>
+
+    <div id="terminal" class$="window {{hidden}} {{kind}}">
+      <div class="title">[[title]]</div>
+      <div class="body">
+        <div id="items" class="items">
+
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class ActorFolder extends Polymer.Element {
+      static get is() { return 'actor-folder'; }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'Blog Post'
+          },
+          title: {
+            type: String,
+          },
+          hidden: {
+            type: String,
+            value: ''
+          }
+        };        
+      }
+
+      ready() {
+        super.ready();
+      }
+
+      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
+        startDelay = startDelay || 0;
+        endDelay = endDelay || 0;
+        var andFinish = function() {
+          setTimeout(done, endDelay)
+        }
+        switch (command) {
+
+        case 'add-file':
+            this.$.file.classList.remove('hidden');        
+            this.$.file.classList.add('animated');
+            this.$.file.classList.add('slideInLeft');
+            if (objectClass) this.$.fileicon.classList.add(objectClass);
+            if (argument) this.$.filename.innerHTML = argument;
+            break;
+
+          case 'click-file':
+            this.$.mouseCursor.classList.remove('hidden');        
+            this.$.mouseCursor.classList.add('animated');
+            this.$.mouseCursor.classList.add('slideInLeft');
+            break;
+
+
+        }
+
+      }
+
+    }
+
+    window.customElements.define(ActorFolder.is, ActorFolder);
+  </script>
+</dom-module>

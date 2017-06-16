@@ -1,0 +1,66 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../styles-shared.html" >
+
+<dom-module id="actor-browser-form">
+  <template>
+    <style include="styles-shared">
+      :host {
+        display: block;
+        margin: 20px;
+      }
+    </style>
+
+    <div id="terminal" class$="window {{hidden}} {{kind}}">
+      <div class="title">[[title]]</div>
+      <div class="body">
+        <div id="items" class="items">
+
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class ActorBrowserForm extends Polymer.Element {
+      static get is() { return 'actor-browser-form'; }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'Blog Post'
+          },
+          title: {
+            type: String,
+          },
+          hidden: {
+            type: String,
+            value: ''
+          }
+        };        
+      }
+
+      ready() {
+        super.ready();
+      }
+
+      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
+        startDelay = startDelay || 0;
+        endDelay = endDelay || 0;
+        var andFinish = function() {
+          setTimeout(done, endDelay)
+        }
+        switch (command) {
+
+          case 'some-command':
+            break;
+
+        }
+
+      }
+
+    }
+
+    window.customElements.define(ActorBrowserForm.is, ActorBrowserForm);
+  </script>
+</dom-module>

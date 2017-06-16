@@ -28,13 +28,13 @@
       like the following.
     </p>
 
-    <window-actor title="Terminal" css-class="terminal"></window-actor>
-    <window-actor title="Spreadsheet" css-class="spreadsheet"></window-actor>
-    <window-actor title="Folder" css-class="folder"></window-actor>
-    <window-actor title="Github" css-class="browserGithub"></window-actor>
-    <window-actor title="Blog Index" css-class="browserBlogIndex"></window-actor>
-    <window-actor title="Blog Post" css-class="browserBlogPost"></window-actor>
-    <window-actor title="Form" css-class="browserForm"></window-actor>
+    <window-actor title="Terminal" kind="terminal"></window-actor>
+    <window-actor title="Spreadsheet" kind="spreadsheet"></window-actor>
+    <window-actor title="Folder" kind="folder"></window-actor>
+    <window-actor title="Github" kind="browserGithub"></window-actor>
+    <window-actor title="Blog Index" kind="browserBlogIndex"></window-actor>
+    <window-actor title="Blog Post" kind="browserBlogPost"></window-actor>
+    <window-actor title="Form" kind="browserForm"></window-actor>
 
     <h1>Step 1: Animations</h1>
 
@@ -45,27 +45,27 @@
     <paper-button raised on-tap="runAnimation" target="folder" animation="hide">Hide</paper-button>
     <paper-button raised on-tap="runAnimation" target="folder" argument="Products" klass="excel" animation="add-file">Drag File</paper-button>
     <paper-button raised on-tap="runAnimation" target="folder" animation="click-file">Double Click File</paper-button>
-    <window-actor id="folder" style="display: block;" css-class="folder"></window-actor>
+    <window-actor id="folder" style="display: block;" kind="folder"></window-actor>
 
 
 
 
     <h4>Blog List</h4> 
     <paper-button raised on-tap="runAnimation" target="blogList" animation="add-item">Add Item</paper-button>
-    <window-actor id="blogList" style="display: block;" css-class="browserBlogIndex"></window-actor>
+    <window-actor id="blogList" style="display: block;" kind="browserBlogIndex"></window-actor>
 
 
 
     <h4>Github</h4> 
     <div>Note: Nothing but CSS is different than the add item on the blog list!</div>
     <paper-button raised on-tap="runAnimation" target="githubWindow" animation="add-item">Add Item</paper-button>
-    <window-actor id="githubWindow" style="display: block;" css-class="browserGithub"></window-actor>
+    <window-actor id="githubWindow" style="display: block;" kind="browserGithub"></window-actor>
 
 
 
     <h4>Terminal</h4> 
     <paper-button raised on-tap="runAnimation" target="terminalWindow" animation="type" argument="hello, world">Add Input</paper-button>
-    <window-actor id="terminalWindow" style="display: block;" css-class="terminal"></window-actor>
+    <window-actor id="terminalWindow" style="display: block;" kind="terminal"></window-actor>
 
 
 
