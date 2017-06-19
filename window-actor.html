@@ -1,5 +1,8 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="styles-shared.html" >
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
 
 <link rel="import" href="actors/actor-browser-blog-index.html" >
 <link rel="import" href="actors/actor-browser-blog-post.html" >
@@ -16,31 +19,15 @@
         display: block;
         margin: 20px;
       }
-      [hidden] {
-        display: none !important;
-      }
-
     </style>
 
-    <actor-browser-blog-index kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'browserBlogIndex')]]" id="browserBlogIndex"></actor-browser-blog-index>
-    <actor-browser-blog-post kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'browserBlogPost')]]" id="browserBlogPost"></actor-browser-blog-post>
-    <actor-browser-form kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'browserForm')]]" id="browserForm"></actor-browser-form>
-    <actor-browser-github kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'browserGithub')]]" id="browserGithub"></actor-browser-github>
-    <actor-folder kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'folder')]]" id="folder"></actor-folder>
-    <actor-spreadsheet kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'spreadsheet')]]" id="spreadsheet"></actor-spreadsheet>
-    <actor-terminal kind="[[kind]]" name="[[name]]" title="[[title]]" hidden$="[[! _eq(kind, 'terminal')]]" id="terminal"></actor-terminal>
-
-    <template is="dom-if" if="[[_eq(kind, 'terminal')]]">
-      <div id="terminal" class$="window {{hidden}} {{kind}}">
-        <div class="title">[[title]]</div>
-        <div class="body">
-          <div id="items" class="items">
-
-          </div>
-        </div>
-      </div>
-    </template>
-
+    <template is="dom-if" if="[[_eq(kind, 'browserBlogIndex')]]"><actor-browser-blog-index kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserBlogIndex"></actor-browser-blog-index></template>
+    <template is="dom-if" if="[[_eq(kind, 'browserBlogPost')]]"><actor-browser-blog-post kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserBlogPost"></actor-browser-blog-post></template>
+    <template is="dom-if" if="[[_eq(kind, 'browserForm')]]"><actor-browser-form kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserForm"></actor-browser-form></template>
+    <template is="dom-if" if="[[_eq(kind, 'browserGithub')]]"><actor-browser-github kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserGithub"></actor-browser-github></template>
+    <template is="dom-if" if="[[_eq(kind, 'folder')]]"><actor-folder kind="[[kind]]" name="[[name]]" title="[[title]]" id="folder"></actor-folder></template>
+    <template is="dom-if" if="[[_eq(kind, 'spreadsheet')]]"><actor-spreadsheet kind="[[kind]]" name="[[name]]" title="[[title]]" id="spreadsheet"></actor-spreadsheet></template>
+    <template is="dom-if" if="[[_eq(kind, 'terminal')]]"><actor-terminal kind="[[kind]]" name="[[name]]" title="[[title]]" id="terminal"></actor-terminal></template>
 
   </template>
 
@@ -52,7 +39,7 @@
           kind: {
             // NOTE: This will be: terminal | spreadsheet | folder | browserGithub | browserBlogIndex | browserBlogPost | browserForm
             type: String,
-            value: 'folder'
+            value: ''
           },
           name: {
             type: String,
