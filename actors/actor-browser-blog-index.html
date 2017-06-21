@@ -31,19 +31,75 @@
         .p-blog-index-3 {
             width: 55%;
         }
+
+        /*sets all elements on 'new-blog' to not visible*/
+        .new-blog.h1-blog-index, .new-blog.p-blog-index-1, .new-blog.p-blog-index-2, .new-blog.p-blog-index-3  {
+            width: 0%;
+        }
+
+        /*************************
+        Blog index window animations
+        *************************/
+
+        .animate-in-h1-blog-index {
+            animation: animate-in-h1-blog-index-timeline 1s forwards;
+        }
+
+        @-webkit-keyframes animate-in-h1-blog-index-timeline {
+            from {
+                box-shadow: rgba(0, 177, 255, 0.3) 0 0 5px 5px;
+            }
+            to {
+                width: 35%;
+                box-shadow: none;
+            }
+        }
+
+        .animate-in-p-blog-index-1 {
+            animation: animate-in-p-blog-index-1-timeline 1s .2s forwards;
+        }
+
+        @-webkit-keyframes animate-in-p-blog-index-1-timeline {
+            from {
+                box-shadow: rgba(0, 177, 255, 0.3) 0 0 5px 5px;
+            }
+            to {
+                width: 50%;
+                box-shadow: none;
+            }
+        }
+
+        .animate-in-p-blog-index-2 {
+            animation: animate-in-p-blog-index-2-timeline 1s .4s forwards;
+        }
+
+        @-webkit-keyframes animate-in-p-blog-index-2-timeline {
+            from {
+                box-shadow: rgba(0, 177, 255, 0.3) 0 0 5px 5px;
+            }
+            to {
+                width: 60%;
+                box-shadow: none;
+            }
+        }
+
+        .animate-in-p-blog-index-3 {
+            animation: animate-in-p-blog-index-3-timeline 1s .6s forwards;
+        }
+
+        @-webkit-keyframes animate-in-p-blog-index-3-timeline {
+            from {
+                box-shadow: rgba(0, 177, 255, 0.3) 0 0 5px 5px;
+            }
+            to {
+                width: 55%;
+                box-shadow: none;
+            }
+        }
         
     </style>
 
-<!--    <div id="terminal" class$="window {{hidden}} {{kind}}">
-      <div class="title">[[title]]</div>
-      <div class="body">
-        <div id="items" class="items">
-
-        </div>
-      </div>
-    </div>-->
-    
-      <p>browserBlogIndex</p>
+     blog index
       <div class="browserBlogIndex window">
           <div class="website-header"><span class="mac-icon close"></span><span class="mac-icon minimize"></span><span class="mac-icon fullScreen"></span>
               <div class="title title-bg">https://www.myblog.com</div>
@@ -61,10 +117,10 @@
               <div class="p-blog-index-1"></div>
               <div class="p-blog-index-2"></div>
               <div class="p-blog-index-3"></div>
-              <div class="h1-blog-index"></div>
-              <div class="p-blog-index-1"></div>
-              <div class="p-blog-index-2"></div>
-              <div class="p-blog-index-3"></div>
+              <div class="h1-blog-index new-blog"></div>
+              <div class="p-blog-index-1 new-blog"></div>
+              <div class="p-blog-index-2 new-blog"></div>
+              <div class="p-blog-index-3 new-blog"></div>
           </div>
       </div>
 
@@ -101,13 +157,21 @@
         }
         switch (command) {
 
-          case 'add-item':
-            var item = document.createElement('div');
-            item.classList.add('item');
-            this.$.items.appendChild(item);
-            item.classList.add('animated');
-            item.classList.add('slideInDown');
-            break;          
+/*          case 'add-item':
+            this.$$('.new-blog.h1-blog-index').classList.add('animate-in-h1-blog-index');
+            this.$$('.new-blog.p-blog-index-1').classList.add('animate-in-p-blog-index-1');
+            this.$$('.new-blog.p-blog-index-2').classList.add('animate-in-p-blog-index-2');
+            this.$$('.new-blog.p-blog-index-3').classList.add('animate-in-p-blog-index-3');
+
+            break; */   
+                
+            case 'add-item':
+                var item = document.createElement('div');
+                item.classList.add('item');
+                this.$.items.appendChild(item);
+                item.classList.add('animated');
+                item.classList.add('slideInDown');
+                break;  
 
         }
 

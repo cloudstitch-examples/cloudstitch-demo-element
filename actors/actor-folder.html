@@ -8,9 +8,80 @@
         display: block;
         margin: 20px;
       }
+        
+        /*************************
+        Folder window
+        *************************/
+
+        .folder .body {
+            margin-left:2%;
+        }
+
+        .folder svg {
+            width:18%;
+            margin:3% 0%;
+            stroke: #ededed;
+        }
+
+        .folder .file-corner {
+            fill: #ededed;
+        }
+        
+        /*************************
+        File
+        *************************/
+
+        .file {
+            padding: 0;
+            border: 0;
+            font-size: 1em;
+            vertical-align: baseline;
+            margin: 20px;
+            width: 120px;
+            text-align: center;
+        }
+
+        .file svg {   
+            stroke: #bfbfbf;
+        }
+
+        .file .file-corner {
+            fill: #bfbfbf;
+        }
+
+        .file-title {
+            font-size: .7em;
+            font-weight: 400;
+            position: relative;
+            padding: 3% 0%;
+            background: #bfbfbf;
+            border-radius: 20px;
+            margin:-5% auto;
+            color: white;
+            box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px 1px;
+            font-family: 'Roboto', sans-serif;
+            width:70%;
+        }
+        /*************************
+        Cursor
+        *************************/
+
+        .mouseCursor {
+            padding: 0;
+            border: 0;
+            font-size: 1em;
+            vertical-align: baseline;
+            margin: 20px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .mouseCursor svg {
+            fill: #333;
+        }
     </style>
 
-    <div id="file" class="file hidden">
+    <!--<div id="file" class="file hidden">
       <div id="fileicon" class="fileicon"></div>      
       <div id="filename" class="filename"></div>
     </div>
@@ -25,8 +96,82 @@
 
         </div>
       </div>
-    </div>
+    </div>-->
+    
+      cursor
+      <div id="mouseCursor" class="mouseCursor hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 71">
+              <defs>
+                  <filter id="a" width="112.1%" height="107.9%" x="-3%" y="-2.1%" filterUnits="objectBoundingBox">
+                      <feOffset dx="1.8" dy="1.5" in="SourceAlpha" result="shadowOffsetOuter1"/>
+                      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+                      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+                      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                  </filter>
+              </defs>
+              <path filter="url(#a)" d="M10.024.253L.818 58.623l15.126-9.228 4.918 18.352 13.523-3.623-4.918-18.353 17.715.43"/>
+              <path stroke="#FFF" d="M10.342 1.442L1.48 57.635l14.774-9.015 4.962 18.515 12.557-3.365-4.96-18.515 17.3.42-35.77-44.233z" fill-rule="evenodd"/>
+          </svg>
+      </div>
+      
+      file
+      <div id="file" class="file hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+              <defs>
+                  <filter id="a" width="124.2%" height="117%" x="-8.6%" y="-5.7%" filterUnits="objectBoundingBox">
+                      <feMorphology in="SourceAlpha" operator="dilate" radius=".5" result="shadowSpreadOuter1"/>
+                      <feOffset dx=".7" dy=".8" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+                      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+                      <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+                      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                  </filter>
+              </defs>
+              <g fill="none" fill-rule="evenodd">
+                  <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" filter="url(#a)"/>
+                  <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                  <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                  <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+              </g>
+          </svg>
+          <div class="file-title">Products</div>
+      </div>
 
+    folder
+      <div class="folder window">
+          <div class="website-header"><span class="mac-icon close"></span><span class="mac-icon minimize"></span><span class="mac-icon fullScreen"></span>
+              <div class="title">Folder</div>
+          </div>
+          <div class="body">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                  <g fill="none" fill-rule="evenodd">
+                      <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                      <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                      <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                  </g>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                  <g fill="none" fill-rule="evenodd">
+                      <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                      <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                      <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                  </g>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                  <g fill="none" fill-rule="evenodd">
+                      <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                      <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                      <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                  </g>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                  <g fill="none" fill-rule="evenodd">
+                      <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                      <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                      <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                  </g>
+              </svg>
+          </div>
+      </div>
   </template>
 
   <script>
