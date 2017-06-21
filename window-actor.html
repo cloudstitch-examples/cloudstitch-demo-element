@@ -2,8 +2,6 @@
 <link rel="import" href="styles-shared.html" >
 <link rel="import" href="../polymer/polymer-element.html">
 
-<link rel="import" href="../polymer/lib/elements/dom-if.html">
-
 <link rel="import" href="actors/actor-browser-blog-index.html" >
 <link rel="import" href="actors/actor-browser-blog-post.html" >
 <link rel="import" href="actors/actor-browser-form.html" >
@@ -19,19 +17,41 @@
         display: block;
         margin: 20px;
       }
+
+      .animate-in-hide {
+        animation: animate-in-hide-timeline .8s forwards;
+      }
+
+      @-webkit-keyframes animate-in-hide-timeline {
+        to {
+          opacity:0;
+          transform: translateY(10%);
+        }
+      }
+        
+      .animate-in-show {
+        animation: animate-in-show-timeline .8s forwards;
+      }
+
+      @-webkit-keyframes animate-in-show-timeline {
+        from {
+          opacity:0;
+          transform: translateY(10%);
+        }
+      }
+
     </style>
-
-    <template is="dom-if" if="[[_eq(kind, 'browserBlogIndex')]]"><actor-browser-blog-index kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserBlogIndex"></actor-browser-blog-index></template>
-    <template is="dom-if" if="[[_eq(kind, 'browserBlogPost')]]"><actor-browser-blog-post kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserBlogPost"></actor-browser-blog-post></template>
-    <template is="dom-if" if="[[_eq(kind, 'browserForm')]]"><actor-browser-form kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserForm"></actor-browser-form></template>
-    <template is="dom-if" if="[[_eq(kind, 'browserGithub')]]"><actor-browser-github kind="[[kind]]" name="[[name]]" title="[[title]]" id="browserGithub"></actor-browser-github></template>
-    <template is="dom-if" if="[[_eq(kind, 'folder')]]"><actor-folder kind="[[kind]]" name="[[name]]" title="[[title]]" id="folder"></actor-folder></template>
-    <template is="dom-if" if="[[_eq(kind, 'spreadsheet')]]"><actor-spreadsheet kind="[[kind]]" name="[[name]]" title="[[title]]" id="spreadsheet"></actor-spreadsheet></template>
-    <template is="dom-if" if="[[_eq(kind, 'terminal')]]"><actor-terminal kind="[[kind]]" name="[[name]]" title="[[title]]" id="terminal"></actor-terminal></template>
-
+    <div id="elementContainer">
+    </div>
   </template>
 
   <script>
+    function dasherize(s) {
+      return s.replace(/[A-Z]/g, function(char, index) {
+        return (index !== 0 ? '-' : '') + char.toLowerCase();
+      });
+    }
+
     class WindowActor extends Polymer.Element {
       static get is() { return 'window-actor'; }
       static get properties() {
@@ -57,6 +77,13 @@
 
       ready() {
         super.ready();
+        var elementName = 'actor-' + dasherize(this.kind);
+        this.ELEM = document.createElement(elementName);
+        this.ELEM.setAttribute('kind', this.kind);
+        this.ELEM.setAttribute('name', this.kind);
+        this.ELEM.setAttribute('title', this.title);
+        this.$.elementContainer.appendChild(this.ELEM);
+        console.log(this.ELEM);
       }
 
       _eq(a, b) {
@@ -69,18 +96,16 @@
         var andFinish = function() {
           setTimeout(done, endDelay)
         }
-        var ELEM = this.$[this.kind];
-
+        
         switch (command) {
           case 'show':
-            ELEM.classList.remove('hidden');
+            this.ELEM.classList.remove('animate-in-hide');
+            this.ELEM.classList.add('animate-in-show');
             break;
 
           case 'hide':
-            ELEM.classList.add('hidden');
-            ELEM.classList.add('hidden');
-            ELEM.classList.remove('animated');
-            ELEM.classList.remove('slideInLeft');
+            this.ELEM.classList.remove('animate-in-show');
+            this.ELEM.classList.add('animate-in-hide');
             break;
 
           case 'add-file':
@@ -89,7 +114,7 @@
           case 'type':
             // these commands are implemented inside the actor
             // Defer to the actor implementation
-            ELEM.runAnimation(command, argument, startDelay, endDelay, objectClass, done);
+            this.ELEM.runAnimation(command, argument, startDelay, endDelay, objectClass, done);
             break;
         }
       }

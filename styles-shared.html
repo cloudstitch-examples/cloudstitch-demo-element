@@ -2,265 +2,320 @@
 <dom-module id="styles-shared">
 <template>
 <style include="styles-animation">
-/*
- *
- * Styles shared across all actors
- *
- */
-/*.window {
-  width: 400px;
-  height: 300px;
-}
 
-.title {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  color: #555;
-}
+  /*************************
+        Colors used:
 
-.body {
-  padding: 20px;
-}
+        lite grey: #EDEDED
+        medium grey: #BFBFBF
+        dark grey: #333333 (terminal window & cursor)
 
-.item {
-  display: block;
-  width: 300px;
-  clear: both;
-}
+        text color #1: #6B6B6B (when on #EDEDED background)
+        text color #2: #767676 (when on #FFF background)
 
-.hidden {
-  display: none;
-}
+        Window ratio: 1:1.5
 
-.file {
-  position: absolute;
-  margin-top: 80px;
-  width: 100px;
-  height: 130px;
-  display: block;
-}
+        when resizing, font-size values also need to be updated
+        *************************/
 
-.fileicon {
-  width: 100px;
-  height: 100px;
-}
+        /*************************
+        Animation CSS Rules
+        *************************/
 
-.cursor {
-  width: 25px;
-  height: 25px; 
-  position: absolute;
-  margin-top: 100px;
-}
 
-.window, .fileicon, .cursor, .item {
-  background-position: top left;
-  background-size: contain;          Generic
-  background-repeat: no-repeat;  
-}
-   */ 
-    
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-    /*************************
-    General CSS Rules
-    *************************/
 
-    .window {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 1em;
-        vertical-align: baseline;
-        overflow: hidden;
+        /*************************
+        General CSS Rules
+        *************************/
 
-        line-height: 1em;
-        border-radius: 8px;
-        width: 480px;
-        height: 320px;
-        margin: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 5px 2px;
-        position: relative;
-        font-family: 'Roboto', sans-serif;
-        color: #999999;
-        background-color: white;            
-    }
+        .window {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 1em;
+            vertical-align: baseline;
+            overflow: hidden;
 
-    .website-header {
-        width: 100%;
-        height: 12.5%;
-        position: absolute;
-        background-color:#ededed;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
+            line-height: 1em;
+            border-radius: 8px;
+            width: 480px;
+            height: 320px;
+            /*
+            width: 300px;
+            height: 200px;
+            */
+            margin: 20px;
+            box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 5px 2px;
+            position: relative;
+            font-family: 'Roboto', sans-serif;
+            color: #999999;
+            background-color: white;            
+        }
 
-    .title {
-        color: #6B6B6B;
-        font-size: .7em;
-        font-weight: 400;
-        position: absolute;
-        top: 28%;
-        left: 0%;
-        right: 0%;
-        text-align: center;
-        margin: auto;
-        width: 40%;
-        border-radius: 4px;
-        padding: .7%;
-    }
+        .website-header {
+            width: 100%;
+            height: 12.5%;
+            position: absolute;
+            background-color:#ededed;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
 
-    .title-bg {
-        background-color: white;
-        color: #767676;
-    }
+        .title {
+            color: #6B6B6B;
+            font-size: .7em;
+            font-weight: 400;
+            position: absolute;
+            top: 28%;
+            left: 0%;
+            right: 0%;
+            text-align: center;
+            margin: auto;
+            width: 40%;
+            border-radius: 4px;
+            padding: .7%;
+        }
 
-    .body {
-        padding-top: 8%;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-    }
+        .title-bg {
+            background-color: white;
+            color: #767676;
+        }
+
+        .body {
+            padding-top: 8%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
 
 
 
-    /*************************
-    Abstracted text represented by medium grey (#bfbfbf) rounded cornered elements
-    *************************/
+        /*************************
+        Abstracted text represented by medium grey (#bfbfbf) rounded cornered elements
+        *************************/
 
-    .h1-blog-post, .img, .p-blog-post, .h2-form, .input-form, .h2-form-full-width, .input-form-full-width, .enter-button, .h1-blog-index, .p-blog-index-1, .p-blog-index-2, .p-blog-index-3, .spreadsheet td div, .browserGithub td div, .github-sub-header div {
-        background-color: #bfbfbf;
-        margin: auto;
-        border-radius: 100px;
-        position:relative;
-    }
-
-
-
-    /*************************
-    Mac traffic light icons
-    *************************/
-
-    .mac-icon {
-        border-radius: 50%;
-        width: 2.5%;
-        height: 30%;
-        display: inline-block;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .close {
-        background-color: #ff5f56;
-        left: 3.5%;
-    }
-
-    .minimize {
-        background-color: #ffbd2e;
-        left: 7%;
-    }
-
-    .fullScreen {
-        background-color: #27c93f;
-        left: 10.5%;
-    }
-    
-    
-    
-
-/*
-  *
-  * Different styles for the actors
-  *
-  */
-.terminal {
-  background-image: url(images/terminal.png);
-}
-
-.folder {
-   background-image: url(images/folder.png);
-}
-
-.spreadsheet {
-  background-image: url(images/spreadsheet.png);
- }
-
-.browserGithub {
-  background-image: url(images/github.png);
-}
-
-.browserForm {
-  background-image: url(images/form.png);
-}
-
-.browserBlogPost {
-  background-image: url(images/blog-post.png);
-}
-
-/*
-.browserBlogIndex {
-  background-image: url(images/blog-index.png);
-}
-*/
-
-.fileicon.excel {
-  background-image: url(images/file-excel.png);
-}
-
-.fileicon.word {
-  background-image: url(images/file-word.png);
-}
-
-.cursor {
-  background-image: url(images/cursor.png);
-}
+        .h1-blog-post, .img, .p-blog-post, .h2-form, .input-form, .h2-form-full-width, .input-form-full-width, .enter-button, .h1-blog-index, .p-blog-index-1, .p-blog-index-2, .p-blog-index-3, .spreadsheet td div, .browserGithub td div, .github-sub-header div {
+            background-color: #bfbfbf;
+            margin: auto;
+            border-radius: 100px;
+            position:relative;
+        }
 
 
-/*
- * Styles for items
- */
 
-/*.terminal .items {
-  font-weight: bold;
-  margin-right: 10px;
-  color: white;
-  margin-top: 20px;
-  margin-left: 20px;
-}
+        /*************************
+        Mac traffic light icons
+        *************************/
 
-.terminal .cli > * {
-  color: white;
-}
+        .mac-icon {
+            border-radius: 50%;
+            width: 2.5%;
+            height: 30%;
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-.nocursor + .typed-cursor{
-  opacity: 0 !important;
-}
+        .close {
+            background-color: #ff5f56;
+            left: 3.5%;
+        }
 
-.terminal .items > * {
-  font-family: "Roboto Mono";
-}
+        .minimize {
+            background-color: #ffbd2e;
+            left: 7%;
+        }
 
-.browserBlogIndex .items {
-  margin-top: 140px;
-  margin-left: 40px;
-}
+        .fullScreen {
+            background-color: #27c93f;
+            left: 10.5%;
+        }
 
-.browserBlogIndex .item {
-  height: 100px;
-  width: 200px;
-  background-image: url(images/blog-index-piece.png);  
-}
 
-.browserGithub .items {
-  margin-top: 140px;
-  margin-left: 10px;
-}
+        /*************************
+        Terminal window
+        *************************/
 
-.browserGithub .item {
-  height: 100px;
-  width: 200px;
-  background-image: url(images/github-piece.png);  
-}*/
+        .terminal {
+            background-color: #333;
+            color: white;              
+        }
+
+        .terminal pre {
+            margin: 3% 5%;
+            font-size: 1em;
+        }
+        
+        /*************************
+        Terminal Animations
+        *************************/
+        
+        
+        .animate-in-terminal-hide {
+            animation: animate-in-terminal-hide-timeline .8s forwards;
+        }
+
+        @-webkit-keyframes animate-in-terminal-hide-timeline {
+            to {
+                opacity:0;
+                transform: translateY(10%);
+            }
+        }
+        
+        .animate-in-terminal-show {
+            animation: animate-in-terminal-show-timeline .8s forwards;
+        }
+
+        @-webkit-keyframes animate-in-terminal-show-timeline {
+            from {
+                opacity:0;
+                transform: translateY(10%);
+            }
+        }
+
+
+        /*************************
+        Cursor
+        *************************/
+
+        .cursor {
+            padding: 0;
+            border: 0;
+            font-size: 1em;
+            vertical-align: baseline;
+            width: 50%;
+            height: 50%;
+            position: absolute;
+            transform: translate(180%, 250%);
+            opacity: 0;
+
+        }
+
+        #cursor-svg {
+            fill: #333;
+            height: 100%;
+            width: 100%;
+        }
+
+        
+
+        /*************************
+        File
+        *************************/
+
+        .file {
+            padding: 0;
+            border: 0;
+            font-size: 1em;
+            vertical-align: baseline;
+            width: 16.8%;
+            height: 27%;
+            text-align: center;
+            position: absolute;
+            transform: translate(-180%, 63%);
+        }
+
+        #file-svg {
+            stroke: #bfbfbf;
+            width: 105%;
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            left: 0;
+        }
+
+        .file .file-corner {
+            fill: #bfbfbf;
+        }
+
+        .file-title {
+            font-size: .7em;
+            font-weight: 400;
+            padding: 3% 5%;
+            background: #bfbfbf;
+            margin:-5% auto;
+            border-radius: 5px;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            width:75%;
+            position: absolute;
+            transform: translate(-50%, 0%);
+            left: 52%;
+            top:125%;
+        }
+
+
+
+
+        /*************************
+        Spreadsheet window
+        *************************/
+
+        .spreadsheet table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            height: 87.5%;
+            color: #767676;
+            font-weight: 400;
+            font-size: .65em;
+        }
+
+        .spreadsheet td {
+            padding: 1.8% 3%;
+            border: 1px solid #ededed;
+        }
+
+        .spreadsheet th {
+            padding: 0;
+            border: 1px solid #ededed;
+            font-weight: 400;
+        }
+
+        .spreadsheet tr:nth-child(even) {
+            background-color: #ededed;
+        }
+
+        .spreadsheet td div {
+            width: 7%;
+            height: 1.8%;
+            position: absolute;
+            margin-top:-.6%;
+        }
+
+        /* selecting numbered / 1st row of spreadsheet */
+        .spreadsheet td:nth-child(8n-7) {
+            width: 7%;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </style>
 </template>

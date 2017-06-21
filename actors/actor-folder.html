@@ -6,28 +6,172 @@
     <style include="styles-shared">
       :host {
         display: block;
-        margin: 20px;
       }
+
+      /*************************
+      Folder window
+      *************************/
+
+      .folder .body {
+          margin-left:2%;
+      }
+
+      .folder svg {
+          width:18%;
+          margin:3% 0%;
+          stroke: #ededed;
+      }
+
+      .folder .file-corner {
+          fill: #ededed;
+      }
+
+      .folder {
+          transform: translateX(35%);
+          overflow: visible;
+      }
+      
+      
+      /*************************
+      Folder animations - Add File
+      *************************/
+      
+      .animate-in-folder-add-file-cursor {
+          animation: animate-in-folder-add-file-cursor-timeline 4s forwards;
+      }
+
+      @-webkit-keyframes animate-in-folder-add-file-cursor-timeline {
+          10% {
+              opacity: 1;
+          }
+          20% {
+              transform: translate(120%, 180%);
+          }
+          40% {
+              transform: translate(120%, 180%);
+          }
+          45% {
+              opacity: 1;
+          }
+          55% {
+              opacity: 0;
+              transform: translate(200%, 220%);
+          }
+      }
+      
+      
+      .animate-in-folder-add-file-file {
+          animation: animate-in-folder-add-file-file-timeline 4s .8s forwards;
+      }
+
+      @-webkit-keyframes animate-in-folder-add-file-file-timeline {
+          30% {
+              transform: translate(12%, 190%);
+          }
+          100% {
+              transform: translate(12%, 190%);
+          }
+      }
+      
+      /*************************
+      Folder animations - Double Click File
+      *************************/
+      
+      .animate-in-folder-click-cursor {
+          animation: animate-in-folder-click-cursor-timeline 2s forwards;
+      }
+
+      @-webkit-keyframes animate-in-folder-click-cursor-timeline {
+          20% {
+              opacity: 1;
+          }
+          40% {
+              transform: translate(120%, 180%);
+          }
+          46% {
+              transform: scale(.95) translate(120%, 180%);
+          }
+          52% {
+              transform: scale(1) translate(120%, 180%);
+          }
+          58% {
+              transform: scale(.95) translate(120%, 180%);
+          }
+          64% {
+              transform: scale(1) translate(120%, 180%);
+          }
+          80% {
+              opacity: 1;
+          }
+          100% {
+              opacity: 0;
+              transform: translate(200%, 220%);
+          }
+      }
+
     </style>
 
-    <!--<div id="file" class="file hidden">
-      <div id="fileicon" class="fileicon"></div>      
-      <div id="filename" class="filename"></div>
-    </div>
-
-    <div id="mouseCursor" class="cursor hidden">
-    </div>
-
-    <div id="terminal" class$="window {{hidden}} {{kind}}">
-      <div class="title">[[title]]</div>
-      <div class="body">
-        <div id="items" class="items">
-
+ <div class="folder window">
+        <div class="website-header"><span class="mac-icon close"></span><span class="mac-icon minimize"></span><span class="mac-icon fullScreen"></span>
+            <div class="title">Folder</div>
         </div>
-      </div>
-    </div>-->
+        <div class="body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                    <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                    <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                    <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                    <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                    <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                    <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                    <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                    <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                </g>
+            </svg>
+        </div>
 
-    folder
+        <div id="file" class="file">
+            <svg id="file-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 33">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M3 4.12v24.05c0 1.1.9 2 2 2h15.85c1.1 0 2-.9 2-2V8.94l-6-6.94-11.87.12c-1.1 0-1.98.9-1.98 2z" fill="#FFF"/>
+                    <path stroke-linecap="round" stroke-width="1.5" d="M5.98 12H19.7M5.98 15H19.7M5.98 18H19.7M5.98 21H19.7M5.98 24H19.7M5.98 27H19.7"/>
+                    <path class="file-corner" stroke-linejoin="bevel" d="M17.1 2.33v4.72c0 1.1.9 2 2 2h3.84L17.1 2.33z"/>
+                </g>
+            </svg>
+            <div class="file-title">Products</div>
+            <div id="cursor" class="cursor">
+                <svg id="cursor-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 71">
+                    <defs>
+                        <filter id="a" width="112.1%" height="107.9%" x="-3%" y="-2.1%" filterUnits="objectBoundingBox">
+                            <feOffset dx="1.8" dy="1.5" in="SourceAlpha" result="shadowOffsetOuter1"/>
+                            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+                            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/>
+                            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                        </filter>
+                    </defs>
+                    <path filter="url(#a)" d="M10.024.253L.818 58.623l15.126-9.228 4.918 18.352 13.523-3.623-4.918-18.353 17.715.43"/>
+                    <path stroke="#FFF" d="M10.342 1.442L1.48 57.635l14.774-9.015 4.962 18.515 12.557-3.365-4.96-18.515 17.3.42-35.77-44.233z" fill-rule="evenodd"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
   </template>
 
   <script>
@@ -60,22 +204,15 @@
           setTimeout(done, endDelay)
         }
         switch (command) {
-
-        case 'add-file':
-            this.$.file.classList.remove('hidden');        
-            this.$.file.classList.add('animated');
-            this.$.file.classList.add('slideInLeft');
-            if (objectClass) this.$.fileicon.classList.add(objectClass);
-            if (argument) this.$.filename.innerHTML = argument;
+          case 'add-file':
+            this.$.cursor.classList.add('animate-in-folder-add-file-cursor');
+            this.$.file.classList.add('animate-in-folder-add-file-file');   
             break;
 
           case 'click-file':
-            this.$.mouseCursor.classList.remove('hidden');        
-            this.$.mouseCursor.classList.add('animated');
-            this.$.mouseCursor.classList.add('slideInLeft');
+            this.$.cursor.classList.add('animate-in-folder-click-cursor');
+            this.$.file.classList.add('animate-in-folder-click-file');   
             break;
-
-
         }
 
       }

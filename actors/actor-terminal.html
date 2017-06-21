@@ -32,16 +32,20 @@
 
     </style>
 
-    terminal
-
-    <!--<div id="terminal" class$="window {{hidden}} {{kind}}">
-      <div class="title">[[title]]</div>
-      <div class="body">
-        <div id="items" class="items">
-
-        </div>
+     <div class="terminal window">
+      <div class="website-header"><span class="mac-icon close"></span><span class="mac-icon minimize"></span><span class="mac-icon fullScreen"></span>
+          <div class="title">Terminal</div>
       </div>
-    </div>-->
+      <div class="body">
+          <pre>
+          read foo
+          var=$(echo $foo | tr "{a-z}" "{A-Z}")
+          # {a-z} Matches a through z
+          # {A-Z} matches A through Z
+          echo $var
+          </pre>
+      </div>
+    </div>
 
   </template>
 

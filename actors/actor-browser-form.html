@@ -6,20 +6,117 @@
     <style include="styles-shared">
       :host {
         display: block;
-        margin: 20px;
       }
+
+        /*************************
+        Form window
+        *************************/
+
+        .column-left, .column-right, .column-full-width  {
+            width: 50%;
+            height: 45%;
+            margin-top: 1%;
+        }
+
+        .column-left {
+            float:left;
+        }
+
+        .column-right {
+            float:right;
+        }
+
+        .column-full-width {
+            width: 100%;
+            clear: both;
+        }
+
+        .h2-form {
+            width: 50%;
+            height: 7%;
+            left:12%;
+            margin: 8% 0% 4%;
+        }
+
+        .input-form {
+            width: 76%;
+            height: 15%;
+            border-radius:0%;
+            margin-left:0%;
+            left:12%;
+            background:#ededed;
+        }
+
+        .input-form-full-width {
+            width: 88%;
+            height: 35%;
+            margin: 0 0 3%;
+            border-radius:0%;
+            background:#ededed;
+            left:6%;
+        }
+
+        .h2-form-full-width {
+            width: 25%;
+            height: 7%;
+            margin: 0 0 2%;
+            left:6%;
+        }
+
+        .enter-button {
+            width: 20%;
+            height: 12%;
+            margin-right:0%;
+            right:6%;
+        }
     </style>
     
-    form
-    <!--
-    <div id="terminal" class$="window {{hidden}} {{kind}}">
-      <div class="title">[[title]]</div>
-      <div class="body">
-        <div id="items" class="items">
-
+    <div class="browserForm window">
+        <div class="website-header"><span class="mac-icon close"></span><span class="mac-icon minimize"></span><span class="mac-icon fullScreen"></span>
+            <div class="title title-bg">https://www.form.com</div>
         </div>
-      </div>
-    </div>-->
+        <div class="body">
+            <div class="column-left">
+                <div class="h2-form"></div>
+                <div class="input-form"></div>
+                <div class="h2-form"></div>
+                <div class="input-form"></div>
+
+            </div>
+            <div class="column-right">
+                <div class="h2-form"></div>
+                <div class="input-form"></div>
+                <div class="h2-form"></div>
+                <div class="input-form"></div>
+
+            </div>
+            <div class="column-full-width">
+                <div class="h2-form-full-width"></div>
+                <div class="input-form-full-width"></div>
+                <div class="enter-button"></div>
+            </div>
+        </div>
+    </div>
+
+    <p>browserBlogPost</p>
+    <div class="browserBlogPost window">
+        <div class="website-header"><span class="mac-icon close"></span><span class="mac-icon minimize"></span><span class="mac-icon fullScreen"></span>
+            <div class="title title-bg">https://www.blog.com</div>
+        </div>
+        <div class="body">
+            <div class="img">
+            </div>
+            <div class="h1-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+            <div class="p-blog-post"></div>
+        </div>
+    </div>
 
   </template>
 
