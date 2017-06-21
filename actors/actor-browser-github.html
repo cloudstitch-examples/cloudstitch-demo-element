@@ -335,29 +335,12 @@
         };        
       }
 
-      ready() {
-        super.ready();
-      }
-
-      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
-        startDelay = startDelay || 0;
-        endDelay = endDelay || 0;
-        var andFinish = function() {
-          setTimeout(done, endDelay)
-        }
-        switch (command) {
-
-          case 'add-item':
-            // defer to actor implementation
-            this.$['new-file-svg'].classList.add('animate-in-github-svg');
-            this.$['new-file'].classList.add('animate-in-github-tr');
-            this.$['new-file-line-1'].classList.add('animate-in-new-file-line-1');
-            this.$['new-file-line-2'].classList.add('animate-in-new-file-line-2');
-            this.$['new-file-line-3'].classList.add('animate-in-new-file-line-3');
-            break;          
-
-        }
-
+      addItem() {
+        this.$['new-file-svg'].classList.add('animate-in-github-svg');
+        this.$['new-file'].classList.add('animate-in-github-tr');
+        this.$['new-file-line-1'].classList.add('animate-in-new-file-line-1');
+        this.$['new-file-line-2'].classList.add('animate-in-new-file-line-2');
+        this.$['new-file-line-3'].classList.add('animate-in-new-file-line-3');
       }
 
     }

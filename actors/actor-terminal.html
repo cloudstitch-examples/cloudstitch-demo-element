@@ -68,50 +68,34 @@
         };        
       }
 
-      ready() {
-        super.ready();
-      }
+      type(argument) {
+        var cli = document.createElement('div');
+        cli.classList.add('cli');
 
-      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
-        startDelay = startDelay || 0;
-        endDelay = endDelay || 0;
-        var andFinish = function() {
-          setTimeout(done, endDelay)
-        }
+        var prompt = document.createElement('span');
+        prompt.classList.add('prompt');
+        prompt.classList.add('promptAnimation');
+        prompt.innerHTML = '$ ';
+    
+        var cmd = document.createElement('span');
+        cmd.classList.add('cmd');
 
-        switch (command) {
+        cli.appendChild(prompt);
+        cli.appendChild(cmd);
 
-          case 'type':
-            var cli = document.createElement('div');
-            cli.classList.add('cli');
-
-            var prompt = document.createElement('span');
-            prompt.classList.add('prompt');
-            prompt.classList.add('promptAnimation');
-            prompt.innerHTML = '$ ';
+        this.$.items.appendChild(cli);
         
-            var cmd = document.createElement('span');
-            cmd.classList.add('cmd');
-
-            cli.appendChild(prompt);
-            cli.appendChild(cmd);
-
-            this.$.items.appendChild(cli);
-            
-            var typed = Typed.new(cmd, {
-              strings: [argument],
-              typeSpeed: 2,
-              startDelay: (0.1 + parseInt(startDelay)),
-              callback: function() {
-                cmd.classList.add('nocursor');                
-                done(typed)
-              }
-            });
-            break;
-        }
+        var typed = Typed.new(cmd, {
+          strings: [argument],
+          typeSpeed: 2,
+          startDelay: (0.1 + parseInt(startDelay)),
+          callback: function() {
+            cmd.classList.add('nocursor');                
+            done(typed)
+          }
+        });
 
       }
-
     }
 
     window.customElements.define(ActorTerminal.is, ActorTerminal);

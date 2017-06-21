@@ -15,7 +15,10 @@
     <style include="styles-shared">
       :host {
         display: block;
-        margin: 20px;
+      }
+
+      [hidden] {
+        visibility: 0;
       }
 
       .animate-in-hide {
@@ -41,23 +44,17 @@
       }
 
     </style>
-    <div id="elementContainer">
+    <div id="elementContainer" hidden$="[[hidden]]">
     </div>
   </template>
 
   <script>
-    function dasherize(s) {
-      return s.replace(/[A-Z]/g, function(char, index) {
-        return (index !== 0 ? '-' : '') + char.toLowerCase();
-      });
-    }
-
     class WindowActor extends Polymer.Element {
       static get is() { return 'window-actor'; }
       static get properties() {
         return {
           kind: {
-            // NOTE: This will be: terminal | spreadsheet | folder | browserGithub | browserBlogIndex | browserBlogPost | browserForm
+            // NOTE: This will be: terminal | spreadsheet | folder | browser-github | browser-blog-index | browser-blog-post | browser-form
             type: String,
             value: ''
           },
@@ -69,16 +66,15 @@
             type: String,
           },
           hidden: {
-            type: String,
-            value: ''
+            type: Boolean,
+            value: false
           }
         };        
       }
 
       ready() {
         super.ready();
-        var elementName = 'actor-' + dasherize(this.kind);
-        this.ELEM = document.createElement(elementName);
+        this.ELEM = document.createElement('actor-' + this.kind);
         this.ELEM.setAttribute('kind', this.kind);
         this.ELEM.setAttribute('name', this.kind);
         this.ELEM.setAttribute('title', this.title);
@@ -86,17 +82,7 @@
         console.log(this.ELEM);
       }
 
-      _eq(a, b) {
-        return a === b;
-      }
-
-      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
-        startDelay = startDelay || 0;
-        endDelay = endDelay || 0;
-        var andFinish = function() {
-          setTimeout(done, endDelay)
-        }
-        
+      runAnimation(command, argument, objectClass) {
         switch (command) {
           case 'show':
             this.ELEM.classList.remove('animate-in-hide');
@@ -108,17 +94,13 @@
             this.ELEM.classList.add('animate-in-hide');
             break;
 
-          case 'add-file':
-          case 'click-file':
-          case 'add-item':
-          case 'type':
-            // these commands are implemented inside the actor
-            // Defer to the actor implementation
-            this.ELEM.runAnimation(command, argument, startDelay, endDelay, objectClass, done);
+          default:
+            if (typeof this.ELEM[command] === 'function') {
+              this.ELEM[command](argument);
+            }
             break;
         }
       }
-
     }
 
     window.customElements.define(WindowActor.is, WindowActor);

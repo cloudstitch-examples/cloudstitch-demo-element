@@ -193,28 +193,14 @@
         };        
       }
 
-      ready() {
-        super.ready();
+      addFile() {
+        this.$.cursor.classList.add('animate-in-folder-add-file-cursor');
+        this.$.file.classList.add('animate-in-folder-add-file-file');   
       }
 
-      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
-        startDelay = startDelay || 0;
-        endDelay = endDelay || 0;
-        var andFinish = function() {
-          setTimeout(done, endDelay)
-        }
-        switch (command) {
-          case 'add-file':
-            this.$.cursor.classList.add('animate-in-folder-add-file-cursor');
-            this.$.file.classList.add('animate-in-folder-add-file-file');   
-            break;
-
-          case 'click-file':
-            this.$.cursor.classList.add('animate-in-folder-click-cursor');
-            this.$.file.classList.add('animate-in-folder-click-file');   
-            break;
-        }
-
+      clickFile() {
+        this.$.cursor.classList.add('animate-in-folder-click-cursor');
+        this.$.file.classList.add('animate-in-folder-click-file');   
       }
 
     }

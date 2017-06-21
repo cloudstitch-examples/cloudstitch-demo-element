@@ -146,24 +146,11 @@
         };        
       }
 
-      ready() {
-        super.ready();
-      }
-
-      runAnimation(command, argument, startDelay, endDelay, objectClass, done) {
-        startDelay = startDelay || 0;
-        endDelay = endDelay || 0;
-        var andFinish = function() {
-          setTimeout(done, endDelay)
-        }
-        switch (command) {
-          case 'add-item':
-            this.$['h1-blog-index'].classList.add('animate-in-h1-blog-index');
-            this.$['p-blog-index-1'].classList.add('animate-in-p-blog-index-1');
-            this.$['p-blog-index-2'].classList.add('animate-in-p-blog-index-2');
-            this.$['p-blog-index-3'].classList.add('animate-in-p-blog-index-3');            
-            break;          
-        }
+      addItem() {
+        this.$['h1-blog-index'].classList.add('animate-in-h1-blog-index');
+        this.$['p-blog-index-1'].classList.add('animate-in-p-blog-index-1');
+        this.$['p-blog-index-2'].classList.add('animate-in-p-blog-index-2');
+        this.$['p-blog-index-3'].classList.add('animate-in-p-blog-index-3');            
       }
 
     }

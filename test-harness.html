@@ -2,6 +2,7 @@
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="window-actor.html">
+<link rel="import" href="animation-runner.html">
 
 <dom-module id="test-harness">
   <template>
@@ -23,7 +24,7 @@
 
     <h1>Step 1: Assets</h1>
 
-    <p>
+    <!--<p>
       Create css classes that can be applied to a window so that they look
       like the following.
     </p>
@@ -31,10 +32,10 @@
     <window-actor title="Terminal" kind="terminal"></window-actor>
     <window-actor title="Spreadsheet" kind="spreadsheet"></window-actor>
     <window-actor title="Folder" kind="folder"></window-actor>
-    <window-actor title="Github" kind="browserGithub"></window-actor>
-    <window-actor title="Blog Index" kind="browserBlogIndex"></window-actor>
-    <window-actor title="Blog Post" kind="browserBlogPost"></window-actor>
-    <window-actor title="Form" kind="browserForm"></window-actor>
+    <window-actor title="Github" kind="browser-github"></window-actor>
+    <window-actor title="Blog Index" kind="browser-blog-index"></window-actor>
+    <window-actor title="Blog Post" kind="browser-blog-post"></window-actor>
+    <window-actor title="Form" kind="browser-form"></window-actor>
 
     <h1>Step 1: Animations</h1>
 
@@ -43,31 +44,26 @@
     <h4>Folder</h4> 
     <paper-button raised on-tap="runAnimation" target="folder" animation="show">Show</paper-button>
     <paper-button raised on-tap="runAnimation" target="folder" animation="hide">Hide</paper-button>
-    <paper-button raised on-tap="runAnimation" target="folder" argument="Products" klass="excel" animation="add-file">Drag File</paper-button>
-    <paper-button raised on-tap="runAnimation" target="folder" animation="click-file">Double Click File</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" argument="Products" klass="excel" animation="addFile">Drag File</paper-button>
+    <paper-button raised on-tap="runAnimation" target="folder" animation="clickFile">Double Click File</paper-button>
     <window-actor id="folder" style="display: block;" kind="folder"></window-actor>
 
-
-
-
     <h4>Blog List</h4> 
-    <paper-button raised on-tap="runAnimation" target="blogList" animation="add-item">Add Item</paper-button>
-    <window-actor id="blogList" style="display: block;" kind="browserBlogIndex"></window-actor>
-
-
+    <paper-button raised on-tap="runAnimation" target="blogList" animation="addItem">Add Item</paper-button>
+    <window-actor id="blogList" style="display: block;" kind="browser-blog-index"></window-actor>
 
     <h4>Github</h4> 
     <div>Note: Nothing but CSS is different than the add item on the blog list!</div>
-    <paper-button raised on-tap="runAnimation" target="githubWindow" animation="add-item">Add Item</paper-button>
-    <window-actor id="githubWindow" style="display: block;" kind="browserGithub"></window-actor>
-
-
+    <paper-button raised on-tap="runAnimation" target="githubWindow" animation="addItem">Add Item</paper-button>
+    <window-actor id="browser-github" style="display: block;" kind="browser-github"></window-actor>
 
     <h4>Terminal</h4> 
     <paper-button raised on-tap="runAnimation" target="terminalWindow" animation="type" argument="hello, world">Add Input</paper-button>
-    <window-actor id="terminalWindow" style="display: block;" kind="terminal"></window-actor>
+    <window-actor id="terminal" style="display: block;" kind="terminal"></window-actor>
 
+    <h1>Final step: Animation Runner</h1>-->
 
+    <animation-runner auto repeats></animation-runner>
 
   </template>
 
@@ -85,17 +81,7 @@
             type: Array
           }
         };        
-      }
-    
-      runAnimation(e) {
-        var target = e.target.getAttribute('target');
-        var animation = e.target.getAttribute('animation');
-        var klass = e.target.getAttribute('klass');
-        var argument = e.target.getAttribute('argument');
-        
-
-        this.$[target].runAnimation(animation, argument, 100, 100, klass, function() {});
-      }
+      }    
     }
 
 
